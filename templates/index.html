@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.4.2.min.css"/>
+  <style>
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+  </head>
+</head>
 <body>
 
-<h1>Old Friends, New Memes</h1>
-<p>Hello, Friends of CodeStories!</p>
+<h1 align="center">Old Friends, New Memes</h1>
+<p align="center">Whaddup, Friends of CodeStories! Submit your comment below.</p>
+
+<!-- <img src="https://preview.redd.it/vrp0i7lgg3t21.jpg?width=640&crop=smart&auto=webp&s=2bfc6d5b57f641f8c49cc8df448d9b7d92fb44e7" class="center"> -->
+<img src="{{image_url}}" class="center">
+
+<br />
+
+<form target="_blank" action = "{{ url_for('add_comment') }}" method = "post" align='center'>
+      <textarea name="comment" rows="5" cols="30">What are your thoughts?</textarea>
+      <br>
+			<input type = "submit" value ="Submit" />
+</form>
+
 
 </body>
 </html>

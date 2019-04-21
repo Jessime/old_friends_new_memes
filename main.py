@@ -16,6 +16,8 @@
 from datetime import datetime
 from flask import Flask
 from flask import render_template
+from flask import request
+from scraper import RedditScraper
 
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
@@ -29,7 +31,6 @@ def update_time():
         outfile.write(str(datetime.now()))
     return 'success'
 
-
 @app.route('/time')
 def time():
     with open('time.txt') as infile:
@@ -40,12 +41,21 @@ def time():
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    return render_template('index.html')
+    image_url = reddit_scraper.get_top_meme()
+    # return reddit_scraper.get_top_meme()
+    return render_template('index.html', image_url=image_url)
+
+@app.route('/add_comment', methods=['POST'])
+def add_comment():
+    comment = request.form['comment']
+    print(comment)
 
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. This
     # can be configured by adding an `entrypoint` to app.yaml.
+    reddit_scraper = RedditScraper()
     app.run(host='127.0.0.1', port=8080, debug=True)
+
 # [END gae_python37_app]
