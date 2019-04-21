@@ -16,6 +16,11 @@
 from datetime import datetime
 from flask import Flask
 from flask import render_template
+from flask import request
+from flask import redirect
+from flask import url_for
+from scraper import RedditScraper
+import random
 
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
@@ -29,7 +34,6 @@ def update_time():
         outfile.write(str(datetime.now()))
     return 'success'
 
-
 @app.route('/time')
 def time():
     with open('time.txt') as infile:
@@ -37,15 +41,34 @@ def time():
     return time
 
 
-@app.route('/')
-def hello():
+@app.route('/', methods=['GET','POST'])
+def index():
     """Return a friendly HTTP greeting."""
-    return render_template('index.html')
+    # has_user_submitted = ping storage DB to see if called for this week, need to send user?
+    # has_user_submitted = False
+    # if has_user_submitted:
+    #     return redirect(url_for('already_submitted'))
 
+    image_url = reddit_scraper.get_top_meme()
+    # return reddit_scraper.get_top_meme()
+    return render_template('index.html', image_url=image_url)
+
+@app.route('/submission', methods=['GET','POST'])
+def submission():
+    if request.method == 'POST':
+        comment = request.form['comment']
+        print(comment)
+    return render_template('submission.html')
+
+@app.route('/voting', methods=['GET','POST'])
+def voting():
+    pass
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. This
     # can be configured by adding an `entrypoint` to app.yaml.
+    reddit_scraper = RedditScraper()
     app.run(host='127.0.0.1', port=8080, debug=True)
+
 # [END gae_python37_app]
