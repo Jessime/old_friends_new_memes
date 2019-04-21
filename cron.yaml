@@ -1,0 +1,4 @@
+cron:
+- description: "update time"
+  url: /update_time
+  schedule: every 2 minutes
