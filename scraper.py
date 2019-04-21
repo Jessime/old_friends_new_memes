@@ -17,7 +17,7 @@ class RedditScraper:
             if not submission.is_self:
                 break
 
-        self.top_submission =submission
+        self.top_submission = submission
 
         return submission.url
 
