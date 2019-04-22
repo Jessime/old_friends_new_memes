@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.4.2.min.css"/>
+  <style>
+    input[type='Checkbox'] {
+      -webkit-appearance:none;
+      width:40px;
+      height:40px;
+      background:white;
+      border-radius:5px;
+      border:2px solid #555;
+  }
+    input[type='Checkbox']:checked {
+      background: #99badd;
+  }
+    input[type='Radio'] {
+      -webkit-appearance:none;
+      width:40px;
+      height:40px;
+      background:white;
+      border-radius:5px;
+      border:2px solid #555;
+  }
+    input[type='Radio']:checked {
+      background: #99badd;
+  }
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<h1 align="center">Time to vote!</h1>
+
+<img src="{{image_url}}" class="center">
+
+<h2>Best comment</h2>
+<p>Select the comment you think is the best.</p>
+
+<form action = "{{ url_for('voted') }}" method = "post">
+  <input type="Radio" Name="best" Value="{{comments[0]}}">{{comments[0]}}<br>
+  <input type="Radio" Name="best" Value="{{comments[1]}}">{{comments[1]}}<br>
+  <input type="Radio" Name="best" Value="{{comments[2]}}">{{comments[2]}}<br>
+  <input type="Radio" Name="best" Value="{{comments[3]}}">{{comments[3]}}<br>
+  <input type="Radio" Name="best" Value="{{comments[4]}}">{{comments[4]}}<br>
+  <input type="Radio" Name="best" Value="{{comments[5]}}">{{comments[5]}}
+  <br>
+
+  <h2>Which comments are from Reddit?</h2>
+  <p>Select the three comments that you think are from Reddit.</p>
+  <script type="text/javascript">
+    function limit_votes(){
+      var limit = 3;
+      $("input:checkbox").click(function() {
+      var bol = $("input:checkbox:checked").length >= limit;
+      $("input:checkbox").not(":checked").attr("disabled",bol);
+      });
+    }
+    $(document).ready(limit_votes);
+  </script>
+  <input type="Checkbox" Name="bots1" Value="{{comments[0]}}">{{comments[0]}}<br>
+  <input type="Checkbox" Name="bots2" Value="{{comments[1]}}">{{comments[1]}}<br>
+  <input type="Checkbox" Name="bots3" Value="{{comments[2]}}">{{comments[2]}}<br>
+  <input type="Checkbox" Name="bots4" Value="{{comments[3]}}">{{comments[3]}}<br>
+  <input type="Checkbox" Name="bots5" Value="{{comments[4]}}">{{comments[4]}}<br>
+  <input type="Checkbox" Name="bots6" Value="{{comments[5]}}">{{comments[5]}}<br>
+
+  <input type = "submit" value ="Submit" />
+</form>
+
+</body>
+</html>

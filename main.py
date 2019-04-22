@@ -21,7 +21,9 @@ from flask import redirect
 from flask import url_for
 from scraper import RedditScraper
 import random
-
+import numpy as np
+import matplotlib.pyplot as plt
+import base64
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
@@ -53,16 +55,53 @@ def index():
     # return reddit_scraper.get_top_meme()
     return render_template('index.html', image_url=image_url)
 
-@app.route('/submission', methods=['GET','POST'])
-def submission():
+@app.route('/submitted', methods=['GET','POST'])
+def submitted():
     if request.method == 'POST':
         comment = request.form['comment']
         print(comment)
-    return render_template('submission.html')
+    return render_template('submitted.html')
 
 @app.route('/voting', methods=['GET','POST'])
 def voting():
-    pass
+    # has_user_submitted = ping storage DB to see if called for this week, need to send user?
+    # has_user_submitted = False
+    # if has_user_submitted:
+    #     return redirect(url_for('already_submitted'))
+    comments = ['1','2','3','4','5','6'] # connect with sherif
+    image_url = reddit_scraper.get_top_meme()
+    return render_template('voting.html', comments=comments, image_url=image_url)
+
+@app.route('/voted', methods=['GET','POST'])
+def voted():
+    # has_user_submitted = ping storage DB to see if called for this week, need to send user?
+    # has_user_submitted = False
+    # if has_user_submitted:
+    #     return redirect(url_for('already_submitted'))
+    print(request.form)
+    if request.method == 'POST':
+        best = request.form['best']
+        comments = []
+        for i in range(1, 7):
+            comment = request.form.get(f'bots{i}', None)
+            if comment is not None:
+                comments.append(comment)
+        print(comments)
+    return render_template('voted.html')
+
+@app.route('/results')
+def results():
+    count = 500
+    xScale = np.linspace(0, 100, count)
+    yScale = np.random.randn(count)
+    graph_file = 'score_history.png'
+    plt.clf()
+    plt.scatter(xScale,yScale)
+    plt.savefig(graph_file)
+    with open(graph_file, 'rb') as infile:
+        string = base64.b64encode(infile.read()).decode("utf-8")
+    # graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template('results.html', plot=string)
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.4.2.min.css"/>
+    <style type="text/css">
+      <!-- .header{
+          text-align: center;
+          background-color: rgb(136, 185, 229);
+          height: 70px;
+          line-height: 70px;
+      } -->
+      .chart{
+          margin-top: 30px;
+          text-align: center;
+      }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1 align="center">
+            Results
+        </h1>
+    </div>
+
+    <div id="chart" class="chart">
+      <img src="data:image/png;base64,{{plot}}" class="center">
+    </div>
+</body>
+</html>
