@@ -9,19 +9,17 @@
     margin-right: auto;
   }
   </style>
-  </head>
 </head>
 <body>
 
 <h1 align="center">Old Friends, New Memes</h1>
 <p align="center">Whaddup, Friends of CodeStories! Submit your comment below.</p>
 
-<!-- <img src="https://preview.redd.it/vrp0i7lgg3t21.jpg?width=640&crop=smart&auto=webp&s=2bfc6d5b57f641f8c49cc8df448d9b7d92fb44e7" class="center"> -->
 <img src="{{image_url}}" class="center">
 
-<br />
+<br/>
 
-<form action = "{{ url_for('submission') }}" method = "post" align='center'>
+<form action = "{{ url_for('submitted') }}" method = "post" align='center'>
       <textarea name="comment" rows="5" cols="30">What are your thoughts?</textarea>
       <br>
 			<input type = "submit" value ="Submit" />
