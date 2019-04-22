@@ -341,8 +341,8 @@ def calculate_scores():
         #player_scores = [player]
         player_scores = []
 
-        score_funny = round(game_data.get('funniest').count(player)/n_other_players, 2)
-        player_scores.append(score_funny)
+        score_best = round(game_data.get('funniest').count(player)/n_other_players, 2)
+        player_scores.append(score_best)
 
         score_accuracy = round(sum(1 for vote in player_votes if vote.startswith('internet_player'))/n_other_players, 2)
         player_scores.append(score_accuracy)
@@ -358,6 +358,6 @@ def calculate_scores():
 
     scores_list = sorted(scores_list, key=lambda x: x[-1], reverse=True)
 
-    scores_list.insert(0, ['player', 'funny', 'accuracy', 'deception', 'overall'])
+    scores_list.insert(0, ['player', 'best', 'accuracy', 'deception', 'overall'])
     my_table = table(scores_list).replace('\n', '')
     return scores_list, my_table
